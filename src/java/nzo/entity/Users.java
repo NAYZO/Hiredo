@@ -29,20 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
     @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u WHERE u.id = :id"),
-    @NamedQuery(name = "Users.findByLogin", query = "SELECT u FROM Users u WHERE u.login = :login"),
-    @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"),
-    @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name"),
-    @NamedQuery(name = "Users.findByLastname", query = "SELECT u FROM Users u WHERE u.lastname = :lastname"),
-    @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"),
-    @NamedQuery(name = "Users.findByTel", query = "SELECT u FROM Users u WHERE u.tel = :tel"),
-    @NamedQuery(name = "Users.findByCity", query = "SELECT u FROM Users u WHERE u.city = :city"),
-    @NamedQuery(name = "Users.findByCode", query = "SELECT u FROM Users u WHERE u.code = :code"),
-    @NamedQuery(name = "Users.findByNotif", query = "SELECT u FROM Users u WHERE u.notif = :notif"),
-    @NamedQuery(name = "Users.findByNotifmsg", query = "SELECT u FROM Users u WHERE u.notifmsg = :notifmsg"),
-    @NamedQuery(name = "Users.findBySocialsituation", query = "SELECT u FROM Users u WHERE u.socialsituation = :socialsituation"),
-    @NamedQuery(name = "Users.findByTitleprofile", query = "SELECT u FROM Users u WHERE u.titleprofile = :titleprofile"),
-    @NamedQuery(name = "Users.findByWebsite", query = "SELECT u FROM Users u WHERE u.website = :website"),
-    @NamedQuery(name = "Users.findByPhoto", query = "SELECT u FROM Users u WHERE u.photo = :photo")})
+    @NamedQuery(name = "Users.findByEmailAndPassword", query = "SELECT u FROM Users u WHERE u.email = :email AND u.password = :password"),
+})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,11 +38,6 @@ public class Users implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "login")
-    private String login;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -121,9 +104,8 @@ public class Users implements Serializable {
         this.id = id;
     }
 
-    public Users(Integer id, String login, String password, String name, String lastname, String email, int notif, int notifmsg) {
+    public Users(Integer id, String password, String name, String lastname, String email, int notif, int notifmsg) {
         this.id = id;
-        this.login = login;
         this.password = password;
         this.name = name;
         this.lastname = lastname;
@@ -138,14 +120,6 @@ public class Users implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getPassword() {
