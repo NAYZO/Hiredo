@@ -29,20 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Enterprise.findAll", query = "SELECT e FROM Enterprise e"),
     @NamedQuery(name = "Enterprise.findById", query = "SELECT e FROM Enterprise e WHERE e.id = :id"),
-    @NamedQuery(name = "Enterprise.findByLogin", query = "SELECT e FROM Enterprise e WHERE e.login = :login"),
-    @NamedQuery(name = "Enterprise.findByPassword", query = "SELECT e FROM Enterprise e WHERE e.password = :password"),
-    @NamedQuery(name = "Enterprise.findByEmail", query = "SELECT e FROM Enterprise e WHERE e.email = :email"),
-    @NamedQuery(name = "Enterprise.findByName", query = "SELECT e FROM Enterprise e WHERE e.name = :name"),
-    @NamedQuery(name = "Enterprise.findByTel", query = "SELECT e FROM Enterprise e WHERE e.tel = :tel"),
-    @NamedQuery(name = "Enterprise.findByFax", query = "SELECT e FROM Enterprise e WHERE e.fax = :fax"),
-    @NamedQuery(name = "Enterprise.findByLogo", query = "SELECT e FROM Enterprise e WHERE e.logo = :logo"),
-    @NamedQuery(name = "Enterprise.findByCity", query = "SELECT e FROM Enterprise e WHERE e.city = :city"),
-    @NamedQuery(name = "Enterprise.findByCode", query = "SELECT e FROM Enterprise e WHERE e.code = :code"),
-    @NamedQuery(name = "Enterprise.findByNotif", query = "SELECT e FROM Enterprise e WHERE e.notif = :notif"),
-    @NamedQuery(name = "Enterprise.findByNotifmsg", query = "SELECT e FROM Enterprise e WHERE e.notifmsg = :notifmsg"),
-    @NamedQuery(name = "Enterprise.findByActivity", query = "SELECT e FROM Enterprise e WHERE e.activity = :activity"),
-    @NamedQuery(name = "Enterprise.findByNbemplyee", query = "SELECT e FROM Enterprise e WHERE e.nbemplyee = :nbemplyee"),
-    @NamedQuery(name = "Enterprise.findByWebsite", query = "SELECT e FROM Enterprise e WHERE e.website = :website")})
+    @NamedQuery(name = "Enterprise.findByEmailAndPassword", query = "SELECT e FROM Enterprise e WHERE e.email = :email AND e.password = :password"),
+})
 public class Enterprise implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,11 +38,6 @@ public class Enterprise implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "login")
-    private String login;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -119,9 +102,8 @@ public class Enterprise implements Serializable {
         this.id = id;
     }
 
-    public Enterprise(Integer id, String login, String password, String email, String name, int notif, int notifmsg) {
+    public Enterprise(Integer id, String password, String email, String name, int notif, int notifmsg) {
         this.id = id;
-        this.login = login;
         this.password = password;
         this.email = email;
         this.name = name;
@@ -135,14 +117,6 @@ public class Enterprise implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getPassword() {
