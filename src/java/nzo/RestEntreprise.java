@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import nzo.entity.Users;
+import nzo.entity.Enterprise;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -26,8 +26,8 @@ import javax.ws.rs.core.Response;
 
 @Stateless
 @LocalBean
-@Path("user")
-public class RestUsers {
+@Path("entreprise")
+public class RestEntreprise {
     
     @PersistenceContext
     private EntityManager em;
@@ -39,8 +39,8 @@ public class RestUsers {
     @GET
     @Produces("application/json")
     @Path("{id}")
-    public Users getUser(@PathParam("id") Integer id) {
-        return em.find(Users.class, id);
+    public Enterprise getEntreprise (@PathParam("id") Integer id) {
+        return em.find(Enterprise.class, id);
     }
     
    /* @GET
@@ -56,7 +56,7 @@ public class RestUsers {
     @POST
     @Consumes("application/json")
     @Produces("text/plain")
-    public Response CreateUser(Users user) {
+    public Response CreateEnterprise(Enterprise user) {
         
         try {
             em.persist(user);

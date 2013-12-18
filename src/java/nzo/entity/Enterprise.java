@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Enterprise.findAll", query = "SELECT e FROM Enterprise e"),
     @NamedQuery(name = "Enterprise.findById", query = "SELECT e FROM Enterprise e WHERE e.id = :id"),
+    @NamedQuery(name = "Enterprise.findByEmailAndPassword", query = "SELECT e FROM Enterprise e WHERE e.email = :email AND e.password = :password"),
     @NamedQuery(name = "Enterprise.findByPassword", query = "SELECT e FROM Enterprise e WHERE e.password = :password"),
     @NamedQuery(name = "Enterprise.findByEmail", query = "SELECT e FROM Enterprise e WHERE e.email = :email"),
     @NamedQuery(name = "Enterprise.findByName", query = "SELECT e FROM Enterprise e WHERE e.name = :name"),
