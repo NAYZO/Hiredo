@@ -7,51 +7,58 @@
  */
 package nzo;
 
+import javax.ejb.EJBException;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import nzo.entity.Users;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response;
 
-/**
- * Root resource (exposed at "helloworld" path)
- */
-@Path("helloworld")
-public class HelloWorld {
-    @Context
-    private UriInfo context;
 
-    /** Creates a new instance of HelloWorld */
-    public HelloWorld() {
-    }
+@Stateless
+@LocalBean
+@Path("user")
+public class RestUsers {
+    
+    @PersistenceContext
+    private EntityManager em;
 
     /**
-     * Retrieves representation of an instance of helloWorld.HelloWorld
+     * Retrieves representation of an instance of helloWorld.RestUsers
      * @return an instance of java.lang.String
      */
     @GET
     @Produces("application/json")
-    public User getHtml() {
-        User user = new User();
-        user.setName("ala");
-        return user;
+    public String /*Users*/ getHtml() {
+        //user = new Users();
+        //user.setName("ala");
+        return "allla" ;  /*user*/
     }
     
     @POST
     @Consumes("application/json")
     @Produces("text/plain")
-    public Response getResults(User user) {
+    public Response CreateUser(Users user) {
+        
+        try {
+            em.persist(user);
+        } catch (Exception e) {
+            throw new EJBException(e);
+        }
         String result = user.getLogin()+ "ttttttt";
         return Response.status(201).entity(result).build();
     }
     
     /**
-     * PUT method for updating or creating an instance of HelloWorld
+     * PUT method for updating or creating an instance of RestUsers
      * @param content representation for the resource
      * @return an HTTP response with content of the updated or created resource.
      */
