@@ -19,6 +19,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
@@ -37,10 +38,9 @@ public class RestUsers {
      */
     @GET
     @Produces("application/json")
-    public String /*Users*/ getHtml() {
-        //user = new Users();
-        //user.setName("ala");
-        return "allla" ;  /*user*/
+    @Path("{id}")
+    public Users getUser(@PathParam("id") Integer id) {
+        return em.find(Users.class, id);
     }
     
     @POST
@@ -53,8 +53,7 @@ public class RestUsers {
         } catch (Exception e) {
             throw new EJBException(e);
         }
-        String result = user.getLogin()+ "ttttttt";
-        return Response.status(201).entity(result).build();
+        return Response.status(201).entity("ok").build();
     }
     
     /**
