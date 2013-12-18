@@ -21,7 +21,7 @@ import javax.ws.rs.core.Application;
  * @author ievans
  */
 @ApplicationPath("/")
-public class RestUsersApplication extends Application {
+public class RestApplication extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         final Set<Class<?>> classes = new HashSet<>();
