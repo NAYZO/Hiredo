@@ -43,15 +43,17 @@ public class RestUsers {
         return em.find(Users.class, id);
     }
     
-   /* @GET
+    @GET
+    @Consumes("application/json")
     @Produces("application/json")
-    @Path("{email}")
-    public Users Login(@PathParam("email") String email, @PathParam("password") String password) {
-        Users user = null;
-        user = (Users) em.createNamedQuery("findByEmailAndPassword").setParameter("email", email).setParameter("password", password).getSingleResult();
-        return user;
+    @Path("/login")
+    public Users Login(Users user) {
+        return (Users) em.createNamedQuery("findByEmailAndPassword")
+                .setParameter("email", user.getEmail())
+                .setParameter("password", user.getPassword())
+                .getSingleResult();
     }
-    */
+    
     
     @POST
     @Consumes("application/json")

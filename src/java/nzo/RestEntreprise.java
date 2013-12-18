@@ -43,15 +43,16 @@ public class RestEntreprise {
         return em.find(Enterprise.class, id);
     }
     
-   /* @GET
+   @GET
+    @Consumes("application/json")
     @Produces("application/json")
-    @Path("{email}")
-    public Users Login(@PathParam("email") String email, @PathParam("password") String password) {
-        Users user = null;
-        user = (Users) em.createNamedQuery("findByEmailAndPassword").setParameter("email", email).setParameter("password", password).getSingleResult();
-        return user;
+    @Path("/login")
+    public Enterprise Login(Enterprise user) {
+        return (Enterprise) em.createNamedQuery("findByEmailAndPassword")
+                .setParameter("email", user.getEmail())
+                .setParameter("password", user.getPassword())
+                .getSingleResult();
     }
-    */
     
     @POST
     @Consumes("application/json")
