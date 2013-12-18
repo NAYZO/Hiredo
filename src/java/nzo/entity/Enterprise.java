@@ -29,8 +29,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Enterprise.findAll", query = "SELECT e FROM Enterprise e"),
     @NamedQuery(name = "Enterprise.findById", query = "SELECT e FROM Enterprise e WHERE e.id = :id"),
-    @NamedQuery(name = "Enterprise.findByEmailAndPassword", query = "SELECT e FROM Enterprise e WHERE e.email = :email AND e.password = :password"),
-})
+    @NamedQuery(name = "Enterprise.findByPassword", query = "SELECT e FROM Enterprise e WHERE e.password = :password"),
+    @NamedQuery(name = "Enterprise.findByEmail", query = "SELECT e FROM Enterprise e WHERE e.email = :email"),
+    @NamedQuery(name = "Enterprise.findByName", query = "SELECT e FROM Enterprise e WHERE e.name = :name"),
+    @NamedQuery(name = "Enterprise.findByTel", query = "SELECT e FROM Enterprise e WHERE e.tel = :tel"),
+    @NamedQuery(name = "Enterprise.findByFax", query = "SELECT e FROM Enterprise e WHERE e.fax = :fax"),
+    @NamedQuery(name = "Enterprise.findByLogo", query = "SELECT e FROM Enterprise e WHERE e.logo = :logo"),
+    @NamedQuery(name = "Enterprise.findByCity", query = "SELECT e FROM Enterprise e WHERE e.city = :city"),
+    @NamedQuery(name = "Enterprise.findByCode", query = "SELECT e FROM Enterprise e WHERE e.code = :code"),
+    @NamedQuery(name = "Enterprise.findByNotif", query = "SELECT e FROM Enterprise e WHERE e.notif = :notif"),
+    @NamedQuery(name = "Enterprise.findByNotifmsg", query = "SELECT e FROM Enterprise e WHERE e.notifmsg = :notifmsg"),
+    @NamedQuery(name = "Enterprise.findByActivity", query = "SELECT e FROM Enterprise e WHERE e.activity = :activity"),
+    @NamedQuery(name = "Enterprise.findByNbemplyee", query = "SELECT e FROM Enterprise e WHERE e.nbemplyee = :nbemplyee"),
+    @NamedQuery(name = "Enterprise.findByWebsite", query = "SELECT e FROM Enterprise e WHERE e.website = :website")})
 public class Enterprise implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

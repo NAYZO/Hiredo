@@ -30,7 +30,19 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
     @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u WHERE u.id = :id"),
     @NamedQuery(name = "Users.findByEmailAndPassword", query = "SELECT u FROM Users u WHERE u.email = :email AND u.password = :password"),
-})
+    @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"),
+    @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name"),
+    @NamedQuery(name = "Users.findByLastname", query = "SELECT u FROM Users u WHERE u.lastname = :lastname"),
+    @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"),
+    @NamedQuery(name = "Users.findByTel", query = "SELECT u FROM Users u WHERE u.tel = :tel"),
+    @NamedQuery(name = "Users.findByCity", query = "SELECT u FROM Users u WHERE u.city = :city"),
+    @NamedQuery(name = "Users.findByCode", query = "SELECT u FROM Users u WHERE u.code = :code"),
+    @NamedQuery(name = "Users.findByNotif", query = "SELECT u FROM Users u WHERE u.notif = :notif"),
+    @NamedQuery(name = "Users.findByNotifmsg", query = "SELECT u FROM Users u WHERE u.notifmsg = :notifmsg"),
+    @NamedQuery(name = "Users.findBySocialsituation", query = "SELECT u FROM Users u WHERE u.socialsituation = :socialsituation"),
+    @NamedQuery(name = "Users.findByTitleprofile", query = "SELECT u FROM Users u WHERE u.titleprofile = :titleprofile"),
+    @NamedQuery(name = "Users.findByWebsite", query = "SELECT u FROM Users u WHERE u.website = :website"),
+    @NamedQuery(name = "Users.findByPhoto", query = "SELECT u FROM Users u WHERE u.photo = :photo")})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

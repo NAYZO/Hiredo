@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-import nzo.entity.Enterprise;
 
 /**
  *
@@ -28,7 +27,6 @@ public class RestUsersApplication extends Application {
         final Set<Class<?>> classes = new HashSet<>();
         // register root resource
         classes.add(RestUsers.class);
-        classes.add(Enterprise.class);
         return classes;
     }
 
@@ -38,8 +36,6 @@ public class RestUsersApplication extends Application {
      * given list with all resources defined in the project.
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(nzo.RestEntreprise.class);
         resources.add(nzo.RestUsers.class);
     }
-
 }
