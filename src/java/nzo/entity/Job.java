@@ -30,13 +30,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "job")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Job.findAll", query = "SELECT j FROM Job j"),
+    @NamedQuery(name = "Job.findAll", query = "SELECT j FROM Job j ORDER BY j.datecreation"),
+    @NamedQuery(name = "Job.findbydomaine", query = "SELECT j FROM Job j WHERE j.domaine = :domaine ORDER BY j.datecreation"),
+    @NamedQuery(name = "Job.findbyentreprise", query = "SELECT j FROM Job j WHERE j.id_entreprise = :entreprise ORDER BY j.datecreation"),
     @NamedQuery(name = "Job.findById", query = "SELECT j FROM Job j WHERE j.id = :id"),
     @NamedQuery(name = "Job.findByIdEntreprise", query = "SELECT j FROM Job j WHERE j.idEntreprise = :idEntreprise"),
     @NamedQuery(name = "Job.findByTitle", query = "SELECT j FROM Job j WHERE j.title = :title"),
     @NamedQuery(name = "Job.findByType", query = "SELECT j FROM Job j WHERE j.type = :type"),
     @NamedQuery(name = "Job.findByCity", query = "SELECT j FROM Job j WHERE j.city = :city"),
-    @NamedQuery(name = "Job.findByDatecreation", query = "SELECT j FROM Job j WHERE j.datecreation = :datecreation")})
+    @NamedQuery(name = "Job.findByDatecreation", query = "SELECT j FROM Job j WHERE j.datecreation = :datecreation"),
+    @NamedQuery(name = "Job.findByDomaine", query = "SELECT j FROM Job j WHERE j.domaine = :domaine")})
 public class Job implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -74,6 +77,9 @@ public class Job implements Serializable {
     @Column(name = "datecreation")
     @Temporal(TemporalType.DATE)
     private Date datecreation;
+    @Size(max = 100)
+    @Column(name = "domaine")
+    private String domaine;
 
     public Job() {
     }
@@ -146,6 +152,14 @@ public class Job implements Serializable {
 
     public void setDatecreation(Date datecreation) {
         this.datecreation = datecreation;
+    }
+
+    public String getDomaine() {
+        return domaine;
+    }
+
+    public void setDomaine(String domaine) {
+        this.domaine = domaine;
     }
 
     @Override

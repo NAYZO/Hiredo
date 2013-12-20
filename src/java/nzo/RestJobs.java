@@ -7,12 +7,14 @@
  */
 package nzo;
 
+import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import nzo.entity.Job;
 import nzo.entity.Enterprise;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -26,8 +28,8 @@ import javax.ws.rs.core.Response;
 
 @Stateless
 @LocalBean
-@Path("entreprise")
-public class RestEntreprise {
+@Path("job")
+public class RestJobs {
     
     @PersistenceContext
     private EntityManager em;
@@ -39,41 +41,45 @@ public class RestEntreprise {
     @GET
     @Produces("application/json")
     @Path("{id}")
-    public Enterprise getEntreprise (@PathParam("id") Integer id) {
-        return em.find(Enterprise.class, id);
+    public Job getjob(@PathParam("id") Integer id) {
+        return em.find(Job.class, id);
     }
     
     @POST
-    @Consumes("application/json")
     @Produces("application/json")
-    @Path("/login")
-    public Enterprise Login(Enterprise user) {
-        return (Enterprise) em.createNamedQuery("Enterprise.findByEmailAndPassword")
-                .setParameter("email", user.getEmail())
-                .setParameter("password", user.getPassword())
-                .getSingleResult();
+    @Path("/domaine")
+    public List<Job> getJobsByDomaine(Job jb) {
+        return (List<Job>) em.createNamedQuery("Job.findbydomaine")
+                .setParameter("domaine", jb.getDomaine());
     }
+    
+    @GET
+    @Produces("application/json")
+    @Path("/findall")
+    public List<Job> getAllJobs() {
+        return (List<Job>) em.createNamedQuery("Job.findAll");
+    }
+    
+    @POST
+    @Produces("application/json")
+    @Path("/myjobs")
+    public List<Job> getMyjobs(Enterprise entp) {
+        return (List<Job>) em.createNamedQuery("Job.findbyentreprise")
+                .setParameter("entreprise", entp.getId());
+    }
+    
     
     @POST
     @Consumes("application/json")
     @Produces("text/plain")
-    public Response CreateEnterprise(Enterprise user) {
+    public Response CreateJob(Job jb) {
         
         try {
-            em.persist(user);
+            em.persist(jb);
         } catch (Exception e) {
             throw new EJBException(e);
         }
         return Response.status(201).entity("ok").build();
     }
-    
-    /**
-     * PUT method for updating or creating an instance of RestUsers
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("text/html")
-    public void putHtml(String content) {
-    }
+
 }

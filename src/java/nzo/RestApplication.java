@@ -38,6 +38,7 @@ public class RestApplication extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(nzo.RestEntreprise.class);
+        resources.add(nzo.RestJobs.class);
         resources.add(nzo.RestUsers.class);
     }
 }
