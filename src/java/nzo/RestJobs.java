@@ -49,7 +49,7 @@ public class RestJobs {
     @Produces("application/json")
     @Path("/domaine")
     public List<Job> getJobsByDomaine(Job jb) {
-        return (List<Job>) em.createNamedQuery("Job.findbydomaine")
+        return (List<Job>) em.createNamedQuery("Job.findByDomaine")
                 .setParameter("domaine", jb.getDomaine());
     }
     
@@ -64,7 +64,7 @@ public class RestJobs {
     @Produces("application/json")
     @Path("/myjobs")
     public List<Job> getMyjobs(Enterprise entp) {
-        return (List<Job>) em.createNamedQuery("Job.findbyentreprise")
+        return (List<Job>) em.createNamedQuery("Job.findByIdEntreprise")
                 .setParameter("entreprise", entp.getId());
     }
     

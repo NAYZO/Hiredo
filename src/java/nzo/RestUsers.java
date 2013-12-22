@@ -7,6 +7,7 @@
  */
 package nzo;
 
+import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -22,6 +23,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import nzo.entity.Education;
+import nzo.entity.Experience;
+import nzo.entity.Language;
 
 
 @Stateless
@@ -31,7 +35,7 @@ public class RestUsers {
     
     @PersistenceContext
     private EntityManager em;
-
+    
     /**
      * Retrieves representation of an instance of helloWorld.RestUsers
      * @return an instance of java.lang.String
@@ -54,13 +58,16 @@ public class RestUsers {
                 .getSingleResult();
     }
     
-    @POST
-    @Consumes("application/json")
+    @GET
     @Produces("application/json")
-    @Path("/profile")
-    public Users Profil(Users user) {
-        return (Users) em.createNamedQuery("Users.getprofile")
-                .setParameter("id", user.getId());
+    @Path("/profile/{id}")
+    public Profile MyProfile (@PathParam("id") Integer id) {
+        Profile prof = new Profile();
+        prof.setUser(em.find(Users.class, id));
+        prof.setEducation( (List<Education>) em.createNamedQuery("Education.findByIdUser").setParameter("idUser", id).getResultList() );
+        prof.setExperience( (List<Experience>) em.createNamedQuery("Experience.findByIdUser").setParameter("idUser", id).getResultList() );
+        prof.setLanguage( (List<Language>) em.createNamedQuery("Language.findByIdUser").setParameter("idUser", id).getResultList() );
+        return prof;
     }
     
     

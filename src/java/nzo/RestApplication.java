@@ -28,6 +28,7 @@ public class RestApplication extends Application {
         // register root resource
         classes.add(RestUsers.class);
         classes.add(RestEntreprise.class);
+        classes.add(RestJobs.class);
         return classes;
     }
 
@@ -41,4 +42,5 @@ public class RestApplication extends Application {
         resources.add(nzo.RestJobs.class);
         resources.add(nzo.RestUsers.class);
     }
+
 }
