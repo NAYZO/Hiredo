@@ -60,13 +60,12 @@ public class RestJobs {
         return em.createNamedQuery("Job.findAll").getResultList();
     }
     
-    @POST
+    @GET
     @Produces("application/json")
-    @Path("/myjobs")
-    public List<Job> getMyjobs(Enterprise entp) {
-        return em.createNamedQuery("Job.findByIdEntreprise").setParameter("entreprise", entp.getId()).getResultList();
+    @Path("/findall/{id}")
+    public List<Job> getMyjobs (@PathParam("id") Integer id) {
+        return em.createNamedQuery("Job.findByIdEntreprise").setParameter("idEntreprise", id).getResultList();
     }
-    
     
     @POST
     @Consumes("application/json")
