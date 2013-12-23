@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import nzo.entity.Job;
 import nzo.entity.Enterprise;
 import javax.ws.rs.Consumes;
@@ -49,23 +50,21 @@ public class RestJobs {
     @Produces("application/json")
     @Path("/domaine")
     public List<Job> getJobsByDomaine(Job jb) {
-        return (List<Job>) em.createNamedQuery("Job.findByDomaine")
-                .setParameter("domaine", jb.getDomaine());
+        return em.createNamedQuery("Job.findByDomaine").setParameter("domaine", jb.getDomaine()).getResultList();
     }
     
     @GET
     @Produces("application/json")
     @Path("/findall")
     public List<Job> getAllJobs() {
-        return (List<Job>) em.createNamedQuery("Job.findAll");
+        return em.createNamedQuery("Job.findAll").getResultList();
     }
     
     @POST
     @Produces("application/json")
     @Path("/myjobs")
     public List<Job> getMyjobs(Enterprise entp) {
-        return (List<Job>) em.createNamedQuery("Job.findByIdEntreprise")
-                .setParameter("entreprise", entp.getId());
+        return em.createNamedQuery("Job.findByIdEntreprise").setParameter("entreprise", entp.getId()).getResultList();
     }
     
     
