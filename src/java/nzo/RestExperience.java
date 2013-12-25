@@ -7,6 +7,7 @@
  */
 package nzo;
 
+
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.LocalBean;
@@ -14,7 +15,7 @@ import javax.ejb.Stateless;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import nzo.entity.Job;
+import nzo.entity.Experience;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -29,8 +30,8 @@ import javax.ws.rs.core.Response;
 
 @Stateless
 @LocalBean
-@Path("job")
-public class RestJobs {
+@Path("experience")
+public class RestExperience {
     
     @PersistenceContext
     private EntityManager em;
@@ -42,47 +43,20 @@ public class RestJobs {
     @GET
     @Produces("application/json")
     @Path("{id}")
-    public Job getjob(@PathParam("id") Integer id) {
-        return em.find(Job.class, id);
-    }
-    
-    @POST
-    @Produces("application/json")
-    @Path("/domaine")
-    public List<Job> getJobsByDomaine(Job jb) {
-        return em.createNamedQuery("Job.findByDomaine").setParameter("domaine", jb.getDomaine()).getResultList();
+    public Experience getExperience (@PathParam("id") Integer id) {
+        return em.find(Experience.class, id);
     }
     
     @GET
     @Produces("application/json")
     @Path("/findall")
-    public List<Job> getAllJobs() {
-        return em.createNamedQuery("Job.findAll").getResultList();
-    }
-    
-    @GET
-    @Produces("application/json")
-    @Path("/findall/{id}")
-    public List<Job> getMyjobs (@PathParam("id") Integer id) {
-        return em.createNamedQuery("Job.findByIdEntreprise").setParameter("idEntreprise", id).getResultList();
-    }
-    
-    @POST
-    @Consumes("application/json")
-    @Produces("text/plain")
-    public Response CreateJob(Job jb) {
-        
-        try {
-            em.persist(jb);
-        } catch (Exception e) {
-            throw new EJBException(e);
-        }
-        return Response.status(201).entity("ok").build();
+    public List<Experience> getAllExperience () {
+        return em.createNamedQuery("Experience.findAll").getResultList();
     }
     
     @DELETE
     @Path("{id}")
-    public void deleteJob (@PathParam("id") String id) {
+    public void deleteExperience (@PathParam("id") String id) {
         try {
             em.remove(id);                
             
@@ -94,7 +68,20 @@ public class RestJobs {
     @PUT
     @Consumes("application/json")
     @Produces("text/plain")
-    public Response UpdateJob (Job val) {
+    public Response UpdateExperience (Experience val) {
+        
+        try {
+            em.persist(val);
+        } catch (Exception e) {
+            throw new EJBException(e);
+        }
+        return Response.status(201).entity("ok").build();
+    }
+    
+    @POST
+    @Consumes("application/json")
+    @Produces("text/plain")
+    public Response CreateExperience (Experience val) {
         
         try {
             em.persist(val);

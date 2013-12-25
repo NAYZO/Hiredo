@@ -15,12 +15,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import nzo.entity.Enterprise;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 
@@ -57,7 +59,7 @@ public class RestEntreprise {
     @POST
     @Consumes("application/json")
     @Produces("text/plain")
-    public Response CreateEnterprise(Enterprise user) {
+    public Response CreateEnterprise (Enterprise user) {
         
         try {
             em.persist(user);
@@ -67,13 +69,27 @@ public class RestEntreprise {
         return Response.status(201).entity("ok").build();
     }
     
-    /**
-     * PUT method for updating or creating an instance of RestUsers
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
+    @DELETE
+    @Path("{id}")
+    public void deleteEnterprise (@PathParam("id") String id) {
+        try {
+            em.remove(id);                
+            
+        } catch (Exception ex) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+    }
+    
     @PUT
-    @Consumes("text/html")
-    public void putHtml(String content) {
+    @Consumes("application/json")
+    @Produces("text/plain")
+    public Response UpdateEnterprise (Enterprise val) {
+        
+        try {
+            em.persist(val);
+        } catch (Exception e) {
+            throw new EJBException(e);
+        }
+        return Response.status(201).entity("ok").build();
     }
 }

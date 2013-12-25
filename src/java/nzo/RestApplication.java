@@ -26,9 +26,19 @@ public class RestApplication extends Application {
     public Set<Class<?>> getClasses() {
         final Set<Class<?>> classes = new HashSet<>();
         // register root resource
-        classes.add(RestUsers.class);
+        classes.add(RestCv.class);
+        classes.add(RestEducation.class);
         classes.add(RestEntreprise.class);
+        classes.add(RestExperience.class);
         classes.add(RestJobs.class);
+        classes.add(RestLanguage.class);
+        classes.add(RestPostule.class);
+        classes.add(RestResume.class);
+        classes.add(RestUsers.class);
+        classes.add(RestVideo.class);
+        
+        
+        
         return classes;
     }
 
@@ -38,9 +48,16 @@ public class RestApplication extends Application {
      * given list with all resources defined in the project.
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(nzo.RestCv.class);
+        resources.add(nzo.RestEducation.class);
         resources.add(nzo.RestEntreprise.class);
+        resources.add(nzo.RestExperience.class);
         resources.add(nzo.RestJobs.class);
+        resources.add(nzo.RestLanguage.class);
+        resources.add(nzo.RestPostule.class);
+        resources.add(nzo.RestResume.class);
         resources.add(nzo.RestUsers.class);
+        resources.add(nzo.RestVideo.class);
     }
 
 }
