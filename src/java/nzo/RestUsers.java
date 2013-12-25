@@ -25,9 +25,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import nzo.entity.Cv;
 import nzo.entity.Education;
 import nzo.entity.Experience;
+import nzo.entity.Job;
 import nzo.entity.Language;
+import nzo.entity.Resume;
+import nzo.entity.Video;
 
 
 @Stateless
@@ -72,6 +76,23 @@ public class RestUsers {
         return prof;
     }
     
+    @GET
+    @Produces("application/json")
+    @Path("/getcvresumevideo/{id}")
+    public Profile getCvResumeVideo (@PathParam("id") Integer id) {
+        Profile prof = new Profile();
+        prof.setCv( (List<Cv>) em.createNamedQuery("Cv.findByIdUser").setParameter("idUser", id).getResultList() );
+        prof.setResume((List<Resume>) em.createNamedQuery("Resume.findByIdUser").setParameter("idUser", id).getResultList() );
+        prof.setVideo((List<Video>) em.createNamedQuery("Video.findByIdUser").setParameter("idUser", id).getResultList() );
+        return prof;
+    }
+    
+    @GET
+    @Produces("application/json")
+    @Path("/listejobpostule/{id}")
+    public List<Job> getListeJobPostule (@PathParam("id") Integer id) {
+        return (List<Job>) em.createNamedQuery("Job.findListJob").setParameter("idUser", id).getResultList();
+    }
     
     @POST
     @Consumes("application/json")

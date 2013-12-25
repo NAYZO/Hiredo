@@ -5,10 +5,13 @@
 package nzo;
 
 import java.util.List;
+import nzo.entity.Cv;
 import nzo.entity.Education;
 import nzo.entity.Experience;
 import nzo.entity.Language;
+import nzo.entity.Resume;
 import nzo.entity.Users;
+import nzo.entity.Video;
 
 /**
  *
@@ -19,6 +22,9 @@ public class Profile {
     private List<Education> education;
     private List<Experience> experience;
     private List<Language> language;
+    private List<Cv> cv;
+    private List<Resume> resume;
+    private List<Video> video;
 
     /**
      * @return the user
@@ -74,6 +80,48 @@ public class Profile {
      */
     public void setLanguage(List<Language> language) {
         this.language = language;
+    }
+
+    /**
+     * @return the cv
+     */
+    public List<Cv> getCv() {
+        return cv;
+    }
+
+    /**
+     * @param cv the cv to set
+     */
+    public void setCv(List<Cv> cv) {
+        this.cv = cv;
+    }
+
+    /**
+     * @return the resume
+     */
+    public List<Resume> getResume() {
+        return resume;
+    }
+
+    /**
+     * @param resume the resume to set
+     */
+    public void setResume(List<Resume> resume) {
+        this.resume = resume;
+    }
+
+    /**
+     * @return the video
+     */
+    public List<Video> getVideo() {
+        return video;
+    }
+
+    /**
+     * @param video the video to set
+     */
+    public void setVideo(List<Video> video) {
+        this.video = video;
     }
 
     
