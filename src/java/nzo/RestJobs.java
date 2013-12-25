@@ -79,5 +79,5 @@ public class RestJobs {
         }
         return Response.status(201).entity("ok").build();
     }
-
+    
 }
