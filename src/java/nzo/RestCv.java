@@ -71,7 +71,7 @@ public class RestCv {
     public Response UpdateCv (Cv val) {
         
         try {
-            em.persist(val);
+            em.merge(val);
         } catch (Exception e) {
             throw new EJBException(e);
         }

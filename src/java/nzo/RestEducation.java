@@ -71,7 +71,7 @@ public class RestEducation {
     public Response UpdateEducation (Education val) {
         
         try {
-            em.persist(val);
+            em.merge(val);
         } catch (Exception e) {
             throw new EJBException(e);
         }

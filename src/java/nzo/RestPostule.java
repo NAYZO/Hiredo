@@ -71,7 +71,7 @@ public class RestPostule {
     public Response UpdatePostule(Postule val) {
         
         try {
-            em.persist(val);
+            em.merge(val);
         } catch (Exception e) {
             throw new EJBException(e);
         }

@@ -71,7 +71,7 @@ public class RestVideo {
     public Response UpdateVideo (Video val) {
         
         try {
-            em.persist(val);
+            em.merge(val);
         } catch (Exception e) {
             throw new EJBException(e);
         }
