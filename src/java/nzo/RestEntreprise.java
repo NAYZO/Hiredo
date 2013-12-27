@@ -7,6 +7,7 @@
  */
 package nzo;
 
+import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -91,5 +92,12 @@ public class RestEntreprise {
             throw new EJBException(e);
         }
         return Response.status(201).entity("ok").build();
+    }
+    
+    @GET
+    @Produces("application/json")
+    @Path("/search/{value}/{city}")
+    public List<Enterprise> search (@PathParam("value") String value, @PathParam("city") String city) {
+        return (List<Enterprise>) em.createNamedQuery("Enterprise.search").setParameter("value", value).setParameter("city", city).getResultList();
     }
 }

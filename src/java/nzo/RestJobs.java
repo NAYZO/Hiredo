@@ -103,4 +103,11 @@ public class RestJobs {
         }
         return Response.status(201).entity("ok").build();
     }
+    
+    @GET
+    @Produces("application/json")
+    @Path("/search/{value}/{city}")
+    public List<Job> search (@PathParam("value") String value, @PathParam("city") String city) {
+        return (List<Job>) em.createNamedQuery("Job.search").setParameter("value", value).setParameter("city", city).getResultList();
+    }
 }

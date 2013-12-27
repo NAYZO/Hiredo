@@ -130,4 +130,11 @@ public class RestUsers {
         }
         return Response.status(201).entity("ok").build();
     }
+    
+    @GET
+    @Produces("application/json")
+    @Path("/search/{value}/{city}")
+    public List<Users> search (@PathParam("value") String value, @PathParam("city") String city) {
+        return (List<Users>) em.createNamedQuery("Users.search").setParameter("value", value).setParameter("city", city).getResultList();
+    }
 }
