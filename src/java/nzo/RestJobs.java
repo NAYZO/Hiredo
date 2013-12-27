@@ -84,8 +84,8 @@ public class RestJobs {
     @Path("{id}")
     public void deleteJob (@PathParam("id") String id) {
         try {
-            em.remove(id);                
-            
+            em.remove(id);
+
         } catch (Exception ex) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
@@ -97,7 +97,7 @@ public class RestJobs {
     public Response UpdateJob (Job val) {
         
         try {
-            em.persist(val);
+            em.merge(val);
         } catch (Exception e) {
             throw new EJBException(e);
         }

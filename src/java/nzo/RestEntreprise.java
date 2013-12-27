@@ -86,7 +86,7 @@ public class RestEntreprise {
     public Response UpdateEnterprise (Enterprise val) {
         
         try {
-            em.persist(val);
+            em.merge(val);
         } catch (Exception e) {
             throw new EJBException(e);
         }

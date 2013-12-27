@@ -71,7 +71,7 @@ public class RestResume {
     public Response UpdateResume (Resume val) {
         
         try {
-            em.persist(val);
+            em.merge(val);
         } catch (Exception e) {
             throw new EJBException(e);
         }

@@ -71,7 +71,7 @@ public class RestLanguage {
     public Response UpdateLanguage (Language val) {
         
         try {
-            em.persist(val);
+            em.merge(val);
         } catch (Exception e) {
             throw new EJBException(e);
         }

@@ -124,9 +124,9 @@ public class RestUsers {
     public Response UpdateUsers (Users val) {
         
         try {
-            em.persist(val);
+            em.merge(val);
         } catch (Exception e) {
-            throw new EJBException(e);
+            throw new IllegalArgumentException(e);
         }
         return Response.status(201).entity("ok").build();
     }

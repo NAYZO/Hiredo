@@ -71,7 +71,7 @@ public class RestExperience {
     public Response UpdateExperience (Experience val) {
         
         try {
-            em.persist(val);
+            em.merge(val);
         } catch (Exception e) {
             throw new EJBException(e);
         }
