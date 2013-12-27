@@ -73,7 +73,7 @@ public class RestEntreprise {
     @Path("{id}")
     public void deleteEnterprise (@PathParam("id") String id) {
         try {
-            em.remove(id);                
+            em.remove(em.find(Enterprise.class, id));
             
         } catch (Exception ex) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);

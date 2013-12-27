@@ -58,7 +58,7 @@ public class RestPostule {
     @Path("{id}")
     public void deletePostule (@PathParam("id") String id) {
         try {
-            em.remove(id);                
+            em.remove(em.find(Postule.class, id));
             
         } catch (Exception ex) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);

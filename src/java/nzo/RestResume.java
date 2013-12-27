@@ -58,7 +58,7 @@ public class RestResume {
     @Path("{id}")
     public void deleteResume (@PathParam("id") String id) {
         try {
-            em.remove(id);                
+            em.remove(em.find(Resume.class, id));
             
         } catch (Exception ex) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);

@@ -58,7 +58,7 @@ public class RestCv {
     @Path("{id}")
     public void deleteCv (@PathParam("id") String id) {
         try {
-            em.remove(id);                
+            em.remove(em.find(Cv.class, id));                
             
         } catch (Exception ex) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
