@@ -81,14 +81,15 @@ public class RestJobs {
     }
     
     @DELETE
+    @Produces("text/plain")
     @Path("{id}")
-    public void deleteJob (@PathParam("id") String id) {
+    public Response deleteJob (@PathParam("id") Integer id) {
         try {
             em.remove(em.find(Job.class, id));
-
         } catch (Exception ex) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
+        return Response.status(201).entity("ok").build();
     }
     
     @PUT
