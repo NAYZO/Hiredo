@@ -51,6 +51,7 @@ public class FileUploadServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         // Create path components to save the file
+        final Integer iduser = Integer.parseInt( request.getParameter("iduser") );
         final String path = "/tmp";
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
@@ -70,6 +71,10 @@ public class FileUploadServlet extends HttpServlet {
             while ((read = filecontent.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
+            // save DB;
+            RestCv newcv = new RestCv();
+            newcv.UploadCv(iduser, fileName);
+            //-----
             writer.println("New file " + fileName + " created at " + path);
             LOGGER.log(Level.INFO, "File {0} being uploaded to {1}",
                     new Object[]{fileName, path});
