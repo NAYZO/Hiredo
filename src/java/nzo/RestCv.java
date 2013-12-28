@@ -94,7 +94,7 @@ public class RestCv {
     public void UploadCv (Integer iduer, String name) {
         Cv newcv = new Cv();
         newcv.setIdUser(iduer);
-        newcv.setName("name");
+        newcv.setName(name);
         try {
             em.persist(newcv);
         } catch (Exception e) {

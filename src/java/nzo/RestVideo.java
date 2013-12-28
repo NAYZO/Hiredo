@@ -90,4 +90,16 @@ public class RestVideo {
         }
         return Response.status(201).entity("ok").build();
     }
+    
+    public void wsVideo (Integer iduer, String name) {
+        Video vd = new Video();
+        vd.setIdUser(iduer);
+        vd.setName(name);
+        try {
+            em.persist(vd);
+        } catch (Exception e) {
+            throw new EJBException(e);
+        }
+        
+    }
 }

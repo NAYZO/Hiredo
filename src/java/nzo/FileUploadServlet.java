@@ -73,7 +73,7 @@ public class FileUploadServlet extends HttpServlet {
             }
             // save DB;
             RestCv newcv = new RestCv();
-            newcv.UploadCv(iduser, fileName);
+                newcv.UploadCv(iduser, fileName);
             //-----
             writer.println("New file " + fileName + " created at " + path);
             LOGGER.log(Level.INFO, "File {0} being uploaded to {1}",
