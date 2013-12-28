@@ -8,6 +8,7 @@
 package nzo;
 
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.LocalBean;
@@ -26,6 +27,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import nzo.entity.Cv;
+import nzo.entity.Resume;
+import nzo.entity.Users;
+import nzo.entity.Video;
 
 
 @Stateless
@@ -52,6 +57,29 @@ public class RestPostule {
     @Path("/findall")
     public List<Postule> getAllPostule () {
         return em.createNamedQuery("Postule.findAll").getResultList();
+    }
+    
+    @GET
+    @Produces("application/json")
+    @Path("/users/{id}")
+    public List<Postule> getUsersByPostule(@PathParam("id") Integer id) {
+         return em.createNamedQuery("Postule.findByIdJob").setParameter("idJob", id).getResultList();
+    }
+    
+    @GET
+    @Produces("application/json")
+    @Path("/detail/{id}")
+    public PostuleDetail getPostuleDetails(@PathParam("id") Integer id) {
+        PostuleDetail pd = new PostuleDetail();
+        Postule pos = (Postule) em.createNamedQuery("Postule.findById").setParameter("id", id).getSingleResult();
+        
+        pd.setUser((Users) em.createNamedQuery("Users.findById").setParameter("id", pos.getIdUser()).getSingleResult());
+        pd.setCv((Cv) em.createNamedQuery("Cv.findById").setParameter("id", Integer.parseInt(pos.getCv())).getSingleResult());
+        pd.setLm((Resume) em.createNamedQuery("Resume.findById").setParameter("id", Integer.parseInt(pos.getResume())).getSingleResult());
+        pd.setVideo((Video) em.createNamedQuery("Video.findById").setParameter("id", Integer.parseInt(pos.getVideo())).getSingleResult());
+        pd.setPostuleDate((Date) pos.getDatePostule());
+        
+        return pd;
     }
     
     @DELETE
