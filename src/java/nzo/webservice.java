@@ -27,9 +27,9 @@ public class webservice {
     }
 
     @WebMethod(operationName = "wsuploadvideo")
-    public String wsuploadvideo (Integer iduer, String name) {
+    public String wsuploadvideo (Integer iduser, String name) {
         Video vd = new Video();
-        vd.setIdUser(iduer);
+        vd.setIdUser(iduser);
         vd.setName(name);
         vd.setPath("vide");
         try {

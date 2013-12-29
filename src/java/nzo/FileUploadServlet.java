@@ -17,10 +17,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJBException;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -29,17 +26,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import nzo.entity.Cv;
+import nzo.entity.Resume;
 
 /**
  * File upload servlet example
  */
-@Stateless
 @WebServlet(name = "FileUploadServlet", urlPatterns = {"/upload"})
 @MultipartConfig
 public class FileUploadServlet extends HttpServlet {
     
-    @PersistenceContext
-    private EntityManager em;
+        @EJB
+	private RequestManager rqm;
 
     private final static Logger LOGGER =
             Logger.getLogger(FileUploadServlet.class.getCanonicalName());
@@ -61,6 +58,7 @@ public class FileUploadServlet extends HttpServlet {
 
         // Create path components to save the file
         final Integer iduser = Integer.parseInt( request.getParameter("iduser") );
+        final String type = request.getParameter("type");
         final String path = "/tmp";
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
@@ -80,21 +78,22 @@ public class FileUploadServlet extends HttpServlet {
             while ((read = filecontent.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
-            
             // save DB;
-            Cv newcv = new Cv();
+            if("cv".equals(type)) {
+                Cv newcv = new Cv();
                 newcv.setIdUser(iduser);
                 newcv.setName(fileName);
                 newcv.setPath("vide");
-                try {
-                    em.persist(newcv);
-                } catch (Exception e) {
-                    throw new EJBException(e);
-                }
-                
-            //------------------------------------------------------------------
-                
-            writer.println("New file " + fileName + " created at " + path);
+                rqm.uploadCv(newcv);
+            } else if ("resume".equals(type)) {
+                Resume newresume = new Resume();
+                newresume.setIdUser(iduser);
+                newresume.setName(fileName);
+                newresume.setPath("vide");
+                rqm.uploadResume(newresume);
+            }
+            //-----
+            writer.println("New file: " + fileName + " iduser: " + iduser + " type:" + type + " created at " + path);
             LOGGER.log(Level.INFO, "File {0} being uploaded to {1}",
                     new Object[]{fileName, path});
 
