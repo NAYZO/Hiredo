@@ -17,6 +17,10 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -24,13 +28,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import nzo.entity.Cv;
 
 /**
  * File upload servlet example
  */
+@Stateless
 @WebServlet(name = "FileUploadServlet", urlPatterns = {"/upload"})
 @MultipartConfig
 public class FileUploadServlet extends HttpServlet {
+    
+    @PersistenceContext
+    private EntityManager em;
 
     private final static Logger LOGGER =
             Logger.getLogger(FileUploadServlet.class.getCanonicalName());
@@ -71,10 +80,20 @@ public class FileUploadServlet extends HttpServlet {
             while ((read = filecontent.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
+            
             // save DB;
-            RestCv newcv = new RestCv();
-                newcv.UploadCv(iduser, fileName);
-            //-----
+            Cv newcv = new Cv();
+                newcv.setIdUser(iduser);
+                newcv.setName(fileName);
+                newcv.setPath("vide");
+                try {
+                    em.persist(newcv);
+                } catch (Exception e) {
+                    throw new EJBException(e);
+                }
+                
+            //------------------------------------------------------------------
+                
             writer.println("New file " + fileName + " created at " + path);
             LOGGER.log(Level.INFO, "File {0} being uploaded to {1}",
                     new Object[]{fileName, path});

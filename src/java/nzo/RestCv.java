@@ -90,16 +90,5 @@ public class RestCv {
         }
         return Response.status(201).entity("ok").build();
     }
-    
-    public void UploadCv (Integer iduer, String name) {
-        Cv newcv = new Cv();
-        newcv.setIdUser(iduer);
-        newcv.setName(name);
-        try {
-            em.persist(newcv);
-        } catch (Exception e) {
-            throw new EJBException(e);
-        }
         
-    }
 }
