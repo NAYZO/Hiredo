@@ -109,6 +109,9 @@ public class RestJobs {
     @Produces("application/json")
     @Path("/search/{value}/{city}")
     public List<Job> search (@PathParam("value") String value, @PathParam("city") String city) {
-        return (List<Job>) em.createNamedQuery("Job.search").setParameter("value", value).setParameter("city", city).getResultList();
+        if("000".equals(city)) {
+            city = "";
+        }
+        return (List<Job>) em.createNamedQuery("Job.search").setParameter("value", "%" + value + "%").setParameter("city", "%" + city + "%").getResultList();
     }
 }

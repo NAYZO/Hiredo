@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
     @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u WHERE u.id = :id"),
-    @NamedQuery(name = "Users.search", query = "SELECT u FROM Users u WHERE (u.name LIKE '%:value%' OR u.lastname LIKE '%:value%' OR u.titleprofile LIKE '%:value%') AND u.city LIKE '%:city%' "),
+    @NamedQuery(name = "Users.search", query = "SELECT u FROM Users u WHERE (u.name LIKE :value OR u.lastname LIKE :value OR u.titleprofile LIKE :value) AND u.city LIKE :city"),
     @NamedQuery(name = "Users.findByEmailAndPassword", query = "SELECT u FROM Users u WHERE u.email = :email AND u.password = :password"),
     @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"),
     @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name"),
