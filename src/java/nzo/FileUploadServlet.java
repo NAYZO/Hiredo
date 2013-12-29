@@ -59,7 +59,7 @@ public class FileUploadServlet extends HttpServlet {
         // Create path components to save the file
         final Integer iduser = Integer.parseInt( request.getParameter("iduser") );
         final String type = request.getParameter("type");
-        final String path = "/tmp";
+        final String path = getServletContext().getRealPath("../../uploads");// Chemin: /Hiredo/uploads
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
 
@@ -93,7 +93,8 @@ public class FileUploadServlet extends HttpServlet {
                 rqm.uploadResume(newresume);
             }
             //-----
-            writer.println("New file: " + fileName + " iduser: " + iduser + " type:" + type + " created at " + path);
+            writer.print("ok");
+            //writer.println("New file: " + fileName + " iduser: " + iduser + " type:" + type + " created at " + path);
             LOGGER.log(Level.INFO, "File {0} being uploaded to {1}",
                     new Object[]{fileName, path});
 
