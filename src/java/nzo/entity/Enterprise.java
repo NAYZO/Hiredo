@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "enterprise")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Enterprise.search", query = "SELECT u FROM Enterprise u WHERE u.name LIKE '%:value%' OR u.activity LIKE '%:value%' OR u.city LIKE '%:city%' "),
+    @NamedQuery(name = "Enterprise.search", query = "SELECT u FROM Enterprise u WHERE (u.name LIKE :value OR u.activity LIKE :value) AND u.city LIKE :city"),
     @NamedQuery(name = "Enterprise.findAll", query = "SELECT e FROM Enterprise e"),
     @NamedQuery(name = "Enterprise.findById", query = "SELECT e FROM Enterprise e WHERE e.id = :id"),
     @NamedQuery(name = "Enterprise.findByEmailAndPassword", query = "SELECT e FROM Enterprise e WHERE e.email = :email AND e.password = :password"),

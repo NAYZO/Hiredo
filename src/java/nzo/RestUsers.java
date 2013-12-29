@@ -135,6 +135,9 @@ public class RestUsers {
     @Produces("application/json")
     @Path("/search/{value}/{city}")
     public List<Users> search (@PathParam("value") String value, @PathParam("city") String city) {
-        return (List<Users>) em.createNamedQuery("Users.search").setParameter("value", value).setParameter("city", city).getResultList();
+        if("000".equals(city)) {
+            city = "";
+        }
+        return (List<Users>) em.createNamedQuery("Users.search").setParameter("value", "%" + value + "%").setParameter("city", "%" + city + "%").getResultList();
     }
 }

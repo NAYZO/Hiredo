@@ -98,6 +98,9 @@ public class RestEntreprise {
     @Produces("application/json")
     @Path("/search/{value}/{city}")
     public List<Enterprise> search (@PathParam("value") String value, @PathParam("city") String city) {
-        return (List<Enterprise>) em.createNamedQuery("Enterprise.search").setParameter("value", value).setParameter("city", city).getResultList();
+        if("000".equals(city)) {
+            city = "";
+        }
+        return (List<Enterprise>) em.createNamedQuery("Enterprise.search").setParameter("value", "%" + value + "%").setParameter("city", "%" + city + "%").getResultList();
     }
 }
