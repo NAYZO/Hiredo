@@ -54,6 +54,13 @@ public class RestVideo {
         return em.createNamedQuery("Video.findAll").getResultList();
     }
     
+    @GET
+    @Produces("application/json")
+    @Path("/myvideos/{id}")
+    public List<Video> getMyVideos (@PathParam("id") Integer id) {
+        return em.createNamedQuery("Video.findByIdUser").setParameter("idUser", id).getResultList();
+    }
+    
     @DELETE
     @Path("{id}")
     public void deleteVideo (@PathParam("id") String id) {

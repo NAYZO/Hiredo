@@ -73,6 +73,7 @@ public class RestUsers {
         prof.setEducation( (List<Education>) em.createNamedQuery("Education.findByIdUser").setParameter("idUser", id).getResultList() );
         prof.setExperience( (List<Experience>) em.createNamedQuery("Experience.findByIdUser").setParameter("idUser", id).getResultList() );
         prof.setLanguage( (List<Language>) em.createNamedQuery("Language.findByIdUser").setParameter("idUser", id).getResultList() );
+        prof.setVideo( (List<Video>) em.createNamedQuery("Video.findByIdUser").setParameter("idUser", id).getResultList());
         return prof;
     }
     
