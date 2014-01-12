@@ -43,7 +43,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Users.findBySocialsituation", query = "SELECT u FROM Users u WHERE u.socialsituation = :socialsituation"),
     @NamedQuery(name = "Users.findByTitleprofile", query = "SELECT u FROM Users u WHERE u.titleprofile = :titleprofile"),
     @NamedQuery(name = "Users.findByWebsite", query = "SELECT u FROM Users u WHERE u.website = :website"),
+    @NamedQuery(name = "Users.findByVideoPrincipalId", query = "SELECT u FROM Users u WHERE u.videoPrincipalId = :videoPrincipalId"),
     @NamedQuery(name = "Users.findByPhoto", query = "SELECT u FROM Users u WHERE u.photo = :photo")})
+   
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -109,6 +111,8 @@ public class Users implements Serializable {
     @Size(max = 255)
     @Column(name = "photo")
     private String photo;
+    @Column(name = "video_principal_id")
+    private Integer videoPrincipalId;
 
     public Users() {
     }
@@ -253,6 +257,14 @@ public class Users implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public Integer getVideoPrincipalId() {
+        return videoPrincipalId;
+    }
+
+    public void setVideoPrincipalId(Integer videoPrincipalId) {
+        this.videoPrincipalId = videoPrincipalId;
     }
 
     @Override
