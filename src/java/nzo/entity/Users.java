@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Users.findByTitleprofile", query = "SELECT u FROM Users u WHERE u.titleprofile = :titleprofile"),
     @NamedQuery(name = "Users.findByWebsite", query = "SELECT u FROM Users u WHERE u.website = :website"),
     @NamedQuery(name = "Users.findByVideoPrincipalId", query = "SELECT u FROM Users u WHERE u.videoPrincipalId = :videoPrincipalId"),
-    @NamedQuery(name = "Users.findByPhoto", query = "SELECT u FROM Users u WHERE u.photo = :photo")})
+    @NamedQuery(name = "Users.findByPhoto", query = "SELECT u FROM Users u WHERE u.photo = :photo"),
+    @NamedQuery(name = "Users.findNotification", query = "SELECT u FROM Users u WHERE u.id = :id AND u.notif = 1"),
+    @NamedQuery(name = "Users.initNotification", query = "UPDATE Users u SET u.notif = 0 WHERE u.id = :id"),
+    @NamedQuery(name = "Users.setNotif", query = "UPDATE Users u SET u.notif = 1, u.code = :code WHERE u.id = :id")})
    
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -84,7 +87,7 @@ public class Users implements Serializable {
     @Size(max = 50)
     @Column(name = "city")
     private String city;
-    @Size(max = 10)
+    @Size(max = 100)
     @Column(name = "code")
     private String code;
     @Basic(optional = false)

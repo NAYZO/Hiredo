@@ -43,7 +43,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Enterprise.findByNotifmsg", query = "SELECT e FROM Enterprise e WHERE e.notifmsg = :notifmsg"),
     @NamedQuery(name = "Enterprise.findByActivity", query = "SELECT e FROM Enterprise e WHERE e.activity = :activity"),
     @NamedQuery(name = "Enterprise.findByNbemplyee", query = "SELECT e FROM Enterprise e WHERE e.nbemplyee = :nbemplyee"),
-    @NamedQuery(name = "Enterprise.findByWebsite", query = "SELECT e FROM Enterprise e WHERE e.website = :website")})
+    @NamedQuery(name = "Enterprise.findByWebsite", query = "SELECT e FROM Enterprise e WHERE e.website = :website"),
+    @NamedQuery(name = "Enterprise.findNotification", query = "SELECT e FROM Enterprise e WHERE e.id = :id AND e.notif = 1"),
+    @NamedQuery(name = "Enterprise.initNotification", query = "UPDATE Enterprise e SET e.notif = 0 WHERE e.id = :id"),
+    @NamedQuery(name = "Enterprise.setNotif", query = "UPDATE Enterprise e SET e.notif = 1, e.code = :code, e.notifmsg = :jobId WHERE e.id = :id")})
+
 public class Enterprise implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -84,7 +88,7 @@ public class Enterprise implements Serializable {
     @Size(max = 50)
     @Column(name = "city")
     private String city;
-    @Size(max = 10)
+    @Size(max = 100)
     @Column(name = "code")
     private String code;
     @Basic(optional = false)

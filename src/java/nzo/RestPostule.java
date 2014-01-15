@@ -28,6 +28,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import nzo.entity.Cv;
+import nzo.entity.Job;
 import nzo.entity.Resume;
 import nzo.entity.Users;
 import nzo.entity.Video;
@@ -78,7 +79,7 @@ public class RestPostule {
         pd.setLm((Resume) em.createNamedQuery("Resume.findById").setParameter("id", Integer.parseInt(pos.getResume())).getSingleResult());
         pd.setVideo((Video) em.createNamedQuery("Video.findById").setParameter("id", Integer.parseInt(pos.getVideo())).getSingleResult());
         pd.setPostuleDate((Date) pos.getDatePostule());
-        
+        pd.setJob((Job)em.createNamedQuery("Job.findById").setParameter("id", pos.getIdJob()).getSingleResult());
         return pd;
     }
     
@@ -113,8 +114,9 @@ public class RestPostule {
         
         try {
             em.persist(val);
-        } catch (Exception e) {
-            throw new EJBException(e);
+        } catch (Exception ex) {
+            //throw new EJBException(ex);
+            return Response.status(500).entity("Error\nClass: " + ex.getClass() + "\nCause: " + ex.getCause() + "\nMessage: " + ex.getMessage()).build();
         }
         return Response.status(201).entity("ok").build();
     }

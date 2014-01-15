@@ -9,6 +9,7 @@ import java.util.List;
 import nzo.entity.Cv;
 import nzo.entity.Education;
 import nzo.entity.Experience;
+import nzo.entity.Job;
 import nzo.entity.Language;
 import nzo.entity.Resume;
 import nzo.entity.Users;
@@ -25,6 +26,7 @@ public class PostuleDetail {
     private Resume lm;
     private Video vid;
     private Date postuleDate;
+    private Job job;
     
     /**
      * @return the user
@@ -94,6 +96,20 @@ public class PostuleDetail {
      */
     public void setPostuleDate(Date postuleDate) {
         this.postuleDate = postuleDate;
+    }
+    
+    /**
+     * @return the job
+     */
+    public Job getJob() {
+        return job;
+    }
+
+    /**
+     * @param job the job to set
+     */
+    public void setJob(Job job) {
+        this.job = job;
     }
     
 }
