@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import nzo.entity.Users;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -141,4 +142,61 @@ public class RestUsers {
         }
         return (List<Users>) em.createNamedQuery("Users.search").setParameter("value", "%" + value + "%").setParameter("city", "%" + city + "%").getResultList();
     }
+    
+    @GET
+    @Produces("text/plain")
+    @Path("/setnotif/{id}/{response}/{job_name}")
+    public Response SetNotif (@PathParam("id") String id, @PathParam("response") String response, @PathParam("job_name") String job_name) {
+        try {
+            String code;
+            if("A".equals(response)) {
+                code = "You have been accpeted for the job application '" + job_name + "'. The recruiter will contact you soon";
+            }
+            else if("R".equals(response)) {
+                code = "Your application on the job '" + job_name + "' has been rejected by the recruiter.";
+            }
+            else {
+                code = "Your application response on the job'" + job_name + "' is not knowen.";
+            }
+            
+            Query qqq = em.createNamedQuery("Users.setNotif").setParameter("code", code).setParameter("id", Integer.parseInt(id));
+            qqq.executeUpdate();
+        }
+        catch(Exception ex) {
+            return Response.status(500).entity("Error\nClass: " + ex.getClass() + "\nCause: " + ex.getCause() + "\nMessage: " + ex.getMessage()).build();
+        }
+        return Response.status(201).entity("ok").build();
+    }
+    
+    @GET
+    @Produces("application/json")
+    @Path("/getnotif/{id}")
+    public Utilisateur getNotif(@PathParam("id") Integer id) {
+        List liste = em.createNamedQuery("Users.findNotification").setParameter("id", id).getResultList();
+        if(liste.isEmpty()) {
+            return new Utilisateur();
+        }
+        
+        Query up = em.createNamedQuery("Users.initNotification").setParameter("id", id);
+        up.executeUpdate();
+        Utilisateur u = new Utilisateur();
+        u.setUser((Users)liste.get(0));
+        return u;
+    }
+    
+    @GET
+    @Produces("text/plain")
+    @Path("/choose/{id_user}/{id_video}")
+    public Response ChooseVideo(@PathParam("id_user") Integer idUser, @PathParam("id_video") Integer idVideo) {
+        Users user = em.find(Users.class, idUser);
+        user.setVideoPrincipalId(idVideo);
+        
+        try {
+            em.merge(user);
+        } catch (Exception ex) {
+            return Response.status(500).entity("Error\nClass: " + ex.getClass() + "\nCause: " + ex.getCause() + "\nMessage: " + ex.getMessage()).build();
+        }
+        return Response.status(201).entity("ok").build();
+    }
+    
 }
